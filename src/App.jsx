@@ -6,6 +6,8 @@ import { getApiConfiguration, getGenres } from "./store/homeSlice";
 
 import { Home, Explore, PageNotFound, Details, SearchResult } from "./pages";
 
+import Header from "./components/header/Header"
+
 function App() {
   const dispatch = useDispatch();
   const { url } = useSelector((state) => state.home);
@@ -28,7 +30,7 @@ function App() {
   }, []);
   return (
     <BrowserRouter>
-      {/* <Header /> */}
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/:mediaType/:id" element={<Details />} />
@@ -42,5 +44,3 @@ function App() {
 }
 
 export default App;
-
-// https://youtu.be/VLgVw2NEqCM?t=8242
