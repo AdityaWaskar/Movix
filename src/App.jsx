@@ -6,7 +6,8 @@ import { getApiConfiguration, getGenres } from "./store/homeSlice";
 
 import { Home, Explore, PageNotFound, Details, SearchResult } from "./pages";
 
-import Header from "./components/header/Header"
+import Header from "./components/header/Header";
+import Footer from "./components/footer/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,8 +26,25 @@ function App() {
     });
   };
 
+  const genersCall = async () => {
+    let promises = [];
+    let endPoints = ["tv", "movie"];
+    let allGenres = {};
+
+    endPoints.forEach((url) => {
+      promises.push(fetchDataFromApi(`/genre/${url}/list`));
+    });
+
+    const data = await Promise.all(promises);
+    data.map(({ genres }) => {
+      return genres.map((item) => (allGenres[item.id] = item));
+    });
+    dispatch(getGenres(allGenres));
+  };
+
   useEffect(() => {
     fetchApiConfig();
+    genersCall();
   }, []);
   return (
     <BrowserRouter>
@@ -38,7 +56,7 @@ function App() {
         <Route path="/explore/:mediaType" element={<Explore />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
-      {/* <Footer /> */}
+      <Footer />
     </BrowserRouter>
   );
 }
