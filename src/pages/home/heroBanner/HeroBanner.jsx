@@ -48,6 +48,7 @@ const HeroBanner = () => {
               placeholder="Search for a movie or tv show...."
               onChange={(e) => setQuery(e.target.value)}
               onKeyUp={searchQueryHandler}
+              onClick={searchQueryHandler}
             />
             <button>Search</button>
           </div>
